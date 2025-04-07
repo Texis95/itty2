@@ -9,14 +9,18 @@ RUN npm ci
 # Copia i file del progetto
 COPY . .
 
-# Installa tsx globalmente
-RUN npm install -g tsx
+# Patch vite.config.ts inline
+RUN sed -i 's/import\.meta\.dirname/process.cwd()/g' vite.config.ts
+
+# Esegui il build
+RUN npm run build
 
 # Imposta variabili d'ambiente
 ENV NODE_ENV=production
+ENV PORT=3000
 
 # Espone la porta
 EXPOSE 3000
 
-# Avvia il server direttamente in modalità dev (salta la build)
-CMD ["tsx", "server/index.ts"]
+# Avvia l'applicazione
+CMD ["node", "--experimental-specifier-resolution=node", "dist/index.js"]
