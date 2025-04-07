@@ -1,3 +1,5 @@
+console.log('Current directory:', process.cwd());
+console.log('Directory structure:', require('fs').readdirSync(process.cwd()));
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
