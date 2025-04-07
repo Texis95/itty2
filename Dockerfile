@@ -6,30 +6,22 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Copia i file del progetto
+# Copia i file del progetto 
 COPY . .
 
-# Esegui il build del frontend con Vite
-RUN npx vite build
+# Crea la directory uploads
+RUN mkdir -p uploads
 
-# Crea la cartella uploads
-RUN mkdir -p dist/uploads
-
-# Compila i file server
-RUN npx esbuild server/*.ts shared/*.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
-
-# Patch per il problema di path.resolve con undefined
-RUN echo 'console.log("Patching dist/index.js for path.resolve issues...")' && \
-    sed -i 's/path.resolve(import.meta.dirname/path.resolve(process.cwd()/g' dist/index.js && \
-    sed -i 's/path.resolve(import.meta.url/path.resolve(process.cwd()/g' dist/index.js && \
-    sed -i 's/path.resolve(undefined/path.resolve(process.cwd()/g' dist/index.js
+# Installa tsx globalmente per eseguire TypeScript direttamente
+RUN npm install -g tsx
 
 # Imposta variabili d'ambiente
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV DATABASE_URL=${DATABASE_URL}
 
 # Espone la porta
 EXPOSE 3000
 
-# Avvia l'applicazione
-CMD ["node", "--experimental-specifier-resolution=node", "--no-warnings", "dist/index.js"]
+# Avvia il server in modalità dev
+CMD ["tsx", "server/index.ts"]
