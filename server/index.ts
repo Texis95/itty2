@@ -44,6 +44,22 @@ app.use((req, res, next) => {
 (async () => {
   // Inizializza il database
   try {
+    console.log('Starting database initialization...');
+    
+    // Log delle variabili d'ambiente disponibili (mascherando i valori sensibili)
+    console.log('Environment variables present:');
+    if (process.env.DATABASE_URL) console.log('- DATABASE_URL: [MASKED]');
+    if (process.env.SESSION_SECRET) console.log('- SESSION_SECRET: [MASKED]');
+    if (process.env.NODE_ENV) console.log('- NODE_ENV:', process.env.NODE_ENV);
+    if (process.env.PORT) console.log('- PORT:', process.env.PORT);
+    
+    await pgStorage.init();
+    console.log('Database inizializzato con successo');
+  } catch (error) {
+    console.error('Errore durante l\'inizializzazione del database:', error);
+    process.exit(1);
+  }
+  try {
     await pgStorage.init();
     console.log('Database inizializzato con successo');
   } catch (error) {
