@@ -1,0 +1,93 @@
+Ciao Replit! Voglio sviluppare una social web app in stile Facebook semplificato. Ti spiego in dettaglio tutto quello che deve contenere. Voglio che tu mi generi un'applicazione completa *usando React per il frontend*, e un backend Node.js + Express con database MongoDB. Fammi un'app base funzionante, pronta per essere testata da 50 persone. Dividerò il lavoro in moduli, ma tu crea già la base completa con tutte le funzioni principali.
+
+🔹 *Nome progetto*: Itty
+
+---
+
+## 🔐 AUTENTICAZIONE
+- Registrazione e login con email e password
+- Profilo utente con:
+  - Immagine del profilo
+  - Nome utente unico
+  - Bio breve
+  - Data di registrazione
+- Possibilità di modificare immagine profilo e bio
+
+---
+
+## 🏠 HOME FEED (stile Facebook)
+- Feed globale con post degli utenti (in ordine cronologico, per ora niente algoritmo)
+- Ogni post può contenere:
+  - Testo (max 500 caratteri)
+  - Una o più immagini
+  - Video (mp4)
+- Ogni post mostra:
+  - Nome utente e immagine profilo di chi ha pubblicato
+  - Data/ora della pubblicazione
+
+---
+
+## ❤ INTERAZIONI
+- Like ai post (con conteggio)
+- Commenti ai post (con timestamp e autore)
+- Possibilità di *condividere* post di altri utenti sulla propria bacheca
+
+---
+
+## 🔎 PROFILI UTENTE
+- Pagina profilo visibile pubblicamente con:
+  - Immagine profilo, nome, bio
+  - Lista dei post pubblicati
+- Bottone "modifica profilo" visibile solo al proprietario
+
+---
+
+## 💬 MESSAGGISTICA PRIVATA
+- Chat 1-a-1 tra utenti
+- Mostrare lista contatti con cui ho già parlato
+- Chat in tempo reale (usare socket.io per WebSocket)
+- Ogni messaggio deve contenere:
+  - Testo
+  - Timestamp
+  - Info sul mittente
+
+---
+
+## 🔔 NOTIFICHE IN TEMPO REALE
+- Notifiche via WebSocket in tempo reale per:
+  - Like ai propri post
+  - Commenti ai propri post
+  - Messaggi privati ricevuti
+- Visualizzazione delle notifiche nella navbar
+
+---
+
+## 📦 TECNOLOGIE
+- *Frontend*: React + Axios + React Router
+- *Backend*: Node.js + Express
+- *Database*: MongoDB (Mongoose)
+- *Socket*: socket.io per chat e notifiche
+- *Storage file*: usa multer per upload immagini/video
+- *Styling*: Tailwind CSS o componenti custom
+- *Autenticazione*: JWT
+
+---
+
+## 🧪 TEST & ADMIN
+- Inserisci una funzionalità admin per vedere tutti gli utenti registrati (solo con token speciale)
+- Inserisci dati finti di default (seed) per 10 utenti e 30 post per testing rapido
+
+---
+
+## ✅ EXTRA
+- App mobile responsive
+- Navbar sempre visibile con link a: Home / Profilo / Notifiche / Messaggi
+- Logout
+- Non implementare funzioni come marketplace, gruppi, eventi ecc.
+
+---
+
+## 🧠 NOTA STRATEGICA
+Questa app sarà testata su 50 persone. L'algoritmo di feed personalizzato verrà sviluppato in una seconda fase. Per ora voglio solo avere tutte le funzionalità *base* per far interagire gli utenti.
+
+GENERAMI TUTTO IL CODICE DEL PROGETTO DIVISO IN FILE (puoi iniziare dal backend o frontend, come preferisci) e fammi capire dove inserire credenziali, variabili d’ambiente, ecc. Voglio anche sapere come fare a lanciare il progetto su Replit.
