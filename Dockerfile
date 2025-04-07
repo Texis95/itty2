@@ -10,26 +10,26 @@ RUN npm ci
 COPY . .
 
 # Esegui il build del frontend con Vite
-RUN echo "Building frontend with Vite..." && \
-    npx vite build
+RUN npx vite build
 
 # Crea la cartella uploads
 RUN mkdir -p dist/uploads
 
-# Compila i file server manualmente
-RUN echo "Compiling server files..." && \
-    npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js && \
-    npx esbuild server/routes.ts server/auth.ts server/database.ts server/storage.ts server/vite.ts server/websocket.ts server/seed.ts shared/schema.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+# Compila i file server
+RUN npx esbuild server/*.ts shared/*.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
 
-# Debug: Verifica i file compilati
-RUN echo "Compiled files:" && ls -la dist
+# Patch per il problema di path.resolve con undefined
+RUN echo 'console.log("Patching dist/index.js for path.resolve issues...")' && \
+    sed -i 's/path.resolve(import.meta.dirname/path.resolve(process.cwd()/g' dist/index.js && \
+    sed -i 's/path.resolve(import.meta.url/path.resolve(process.cwd()/g' dist/index.js && \
+    sed -i 's/path.resolve(undefined/path.resolve(process.cwd()/g' dist/index.js
 
-# Imposta le variabili d'ambiente
+# Imposta variabili d'ambiente
 ENV NODE_ENV=production
 ENV PORT=3000
 
 # Espone la porta
 EXPOSE 3000
 
-# Avvia direttamente l'applicazione
+# Avvia l'applicazione
 CMD ["node", "--experimental-specifier-resolution=node", "--no-warnings", "dist/index.js"]
